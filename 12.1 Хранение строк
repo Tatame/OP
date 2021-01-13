@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Stroki_s{
+    char *s;
+}Stroka;
+
+int main(){
+    int kol=0, te=0, numer=0, simkol=0, sum=0, lon=0;
+    char sim;
+    Stroka a[100001];
+    char **p;
+    int n=0;
+    scanf("%d",&n);
+    for (int i=0; i<n; i++){
+        scanf("%d",&te);
+        if (te==0){
+                scanf("%d",&lon);
+                a[kol].s = (char*) malloc((lon+1) * sizeof(char) );
+                scanf("%s",a[kol].s);
+            kol+=1;
+        }
+        if (te==1){
+            scanf("%d",&numer);
+            //p=&a[numer].s;
+            //free(p);
+        }
+        if (te==2){
+            scanf("%d",&numer);
+            printf("%s\n",a[numer].s);
+        }
+        if (te==3){
+            simkol=0;
+            scanf("%d %c",&numer, &sim);
+            int j=0;
+            while (a[numer].s[j]!='\0'){
+                if (a[numer].s[j]==sim) simkol+=1;
+                j++;
+            }
+            printf("%d\n", simkol);
+        }
+    }
+    /*for (int i=0; i<kol; i++){
+        p=&a[i].s;
+        free(p);
+    }*/
+    free(a);
+    return 0;
+}
