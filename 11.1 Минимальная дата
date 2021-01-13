@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include  <stdlib.h>
+typedef struct DateTime_s{
+    int year, month, day;
+    int hours, minutes, seconds;
+} DateTime;
+
+DateTime min (const DateTime* arr, int n){
+    DateTime it;
+    int b=0;
+    long long m;
+    long long t=arr[0].year*10000000000+arr[0].month*100000000+arr[0].day*1000000+arr[0].hours*10000+arr[0].minutes*100+arr[0].seconds;
+    for (int i=1; i<n; i++){
+        m=arr[i].year*10000000000+arr[i].month*100000000+arr[i].day*1000000+arr[i].hours*10000+arr[i].minutes*100+arr[i].seconds;
+        if (m<t){
+            t=m;
+            b=i;
+        }
+    }
+    it=arr[b];
+    return it;
+}
+int main(){
+    int n=0;
+    DateTime res;
+    scanf("%d", &n);
+    DateTime* a=(DateTime*)malloc(n*sizeof(DateTime));
+    for (int i=0; i<n; i++){
+        scanf("%d%d%d", &a[i].year, &a[i].month, &a[i].day);
+        scanf("%d%d%d", &a[i].hours, &a[i].minutes, &a[i].seconds);
+    }
+    res = min(a, n);
+        printf("%d %d %d %d %d %d", res.year, res.month, res.day, res.hours, res.minutes, res.seconds);
+    return 0;
+}
