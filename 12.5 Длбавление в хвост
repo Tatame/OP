@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Tokens_s{
+    int num;
+    struct Tokens_s *next;
+}Tokens;
+
+int main(){
+    int sum=0, kol=0, vse=0, n=0;
+    char c;
+    Tokens *p;
+    Tokens *head=NULL;
+    Tokens* t;
+    while (scanf("%d", &kol)){
+        if (sum==0){
+            p = (Tokens*) malloc( sizeof(Tokens));
+            p->num = kol;
+            p->next = NULL;
+            head = p;
+            t=head;
+            p=NULL;
+        }
+        else{
+            p = (Tokens*) malloc( sizeof(Tokens));
+            p->num = kol;
+            p->next = NULL;
+            t->next=p;
+            t = p;
+            p=NULL;
+        }
+        sum+=1;
+ if (scanf("%c",&c)<=0) break;
+    }
+    p=head;
+    while (p!=NULL){
+        vse+=p->num;
+        n+=1;
+        t=p;
+        p=p->next;
+    }
+    vse=vse-t->num;
+    printf("%d", vse/(n-1));
+    p=head;
+    while (p!=NULL){
+        t=p;
+        p=p->next;
+        free(t);
+    }
+    return 0;
+}
