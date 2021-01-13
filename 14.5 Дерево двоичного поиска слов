@@ -1,0 +1,55 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <mem.h>
+
+typedef struct Node_s{
+    char sl[101];
+    struct Node_s *left;
+    struct Node_s *right;
+}Node;
+
+void In(Node* p, char* a){
+    if (strcmp(p->sl,a)>0){
+        if (p->left == NULL) {
+            Node *t = (Node *) malloc(sizeof(Node));
+            strncpy(t->sl,a,101);
+            t->left = NULL;
+            t->right = NULL;
+            p->left = t;
+            return;
+        }
+        else In(p->left, a);
+    }
+    if (strcmp(p->sl,a)==0) return;
+    if (strcmp(p->sl,a)<0){
+        if (p->right == NULL){
+            Node *t=(Node*)malloc(sizeof(Node));
+            strncpy(t->sl,a,101);
+            t->left=NULL;
+            t->right=NULL;
+            p->right=t;
+            return;
+        }else In(p->right, a);
+    }
+}
+
+void inf (Node *t){
+    if (!t) return;
+    inf(t->left);
+    printf("%s\n", t->sl);
+    inf(t->right);
+}
+
+int main(){
+    char a[101];
+    freopen("input.txt", "r", stdin);
+    Node *p=(Node*)malloc(sizeof(Node));
+    p->left=NULL;
+    p->right=NULL;
+    scanf("%s", p->sl);
+    while (scanf("%s",a)!=EOF) {
+        In(p, a);
+    }
+    inf(p);
+    return 0;
+}
