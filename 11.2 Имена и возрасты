@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include  <stdlib.h>
+#include <string.h>
+
+typedef struct Label_s{
+    char name[16]; //имя автора
+    int age; //возраст
+} Label;
+
+typedef struct NameStats_s{
+    int cntTotal; //подписи
+    int cntLong; //имена длинее 10 букв
+} NameStats;
+
+typedef struct AgeStats_s{
+    int cntTotal; //подписи
+    int cntAdults; //18+
+    int cntKids; //14-
+} AgeStats;
+
+void calcStats (const Label *arr, int cnt, NameStats *oNames, AgeStats *oAges){
+    oNames->cntTotal=cnt;
+    oAges->cntTotal=cnt;
+    int kol=0, k=0;
+    for (int i=0; i<cnt; i++){
+        if (arr[i].age<14) kol+=1;
+    }
+    oAges->cntKids=kol;
+    kol=0;
+    for (int i=0; i<cnt; i++){
+        if (arr[i].age>=18) kol+=1;
+    }
+    oAges->cntAdults=kol;
+    kol=0;
+    for (int i=0; i<cnt; i++){
+        k=strlen(arr[i].name);
+        if (k>10) kol+=1;
+    }
+    oNames->cntLong=kol;
+}
+
+int main(){
+    int n=0;
+    scanf("%d", &n);
+    char ge[6];
+    NameStats Name;
+    AgeStats Age;
+    Label* a=(Label*)malloc(n*sizeof(Label));
+    NameStats* oNames=&Name;
+    AgeStats* oAges=&Age;
+    for (int i=0; i<n; i++){
+        scanf("%s%d%s",a[i].name, &a[i].age, ge);
+    }
+    calcStats(a, n, oNames, oAges);
+    printf("names: total = %d\nnames: long = %d\nages: total = %d\nages: adult = %d\nages: kid = %d",Name.cntTotal, Name.cntLong, Age.cntTotal, Age.cntAdults, Age.cntKids);
+    return 0;
+}
