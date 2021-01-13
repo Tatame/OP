@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Tokens_s{
+    int num;
+    struct Tokens_s *next;
+}Tokens;
+
+int main(){
+    int sum=0, kol=0,n=0;
+    char c;
+    Tokens *p;
+    Tokens *head=NULL;
+    Tokens* t;
+    Tokens* d;
+    while (scanf("%d", &kol)){
+        if (sum==0){
+            p = (Tokens*) malloc( sizeof(Tokens));
+            p->num = kol;
+            p->next = NULL;
+            head = p;
+            p=NULL;
+        }
+        else{
+            t=head;
+            while (1){
+                if (t->num<kol) {
+                    p=t;
+                    t=t->next;
+                }
+                if ((t==head)&&(t->num!=kol)){
+                    d=(Tokens*) malloc( sizeof(Tokens));
+                    d->num = kol;
+                    d->next=head;
+                    head=d;
+                    d=NULL;
+                    break;
+                }
+                if (t==NULL) {
+                    d=(Tokens*) malloc( sizeof(Tokens));
+                    d->num = kol;
+                    p->next=d;
+                    d->next=NULL;
+                    d=NULL;
+                    break;
+                }
+                
+                if (t->num>kol) {
+                    d=(Tokens*) malloc( sizeof(Tokens));
+                    d->num = kol;
+                    p->next=d;
+                    d->next=t;
+                    d=NULL;
+                    break;
+                }
+               if (t->num==kol) break;
+            }
+        }
+        sum+=1;
+    if (scanf("%c",&c)<=0) break;
+    }
+    p=head;
+    while (p!=NULL){
+        printf("%d ",p->num);
+        p=p->next;
+    }
+    p=head;
+    while (p!=NULL){
+        t=p;
+        p=p->next;
+        free(t);
+    }
+    return 0;
+}
