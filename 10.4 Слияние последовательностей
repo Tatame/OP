@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+int res[2000000];
+int merge(int* a, int* b, int n, int m,int* res){
+    int i=0, j=0, rk=0;
+    for (int r=0; r<n+m; r++){
+        if (i>=n) {
+            res[r]=b[j];
+            j+=1;
+        }
+        else {
+            if (j>=m) {
+                res[r]=a[i];
+                i+=1;
+            }
+            else {
+                if (a[i]<b[j]){
+                    res[r]=a[i];
+                    i+=1;
+                }
+                else{
+                    res[r]=b[j];
+                    j+=1;
+                }
+            }
+        }
+        
+    }
+    return n+m;
+}
+int main() {
+    FILE* fi;
+    FILE* fo;
+    int n=0, m=0, rk=0;
+    fi = fopen("input.bin", "rb");
+    fread(&n, sizeof(int), 1, fi);
+    fread(&m, sizeof(int), 1, fi);
+    int* a=(int*)malloc(n*sizeof(int));
+    int* b=(int*)malloc(m*sizeof(int));
+    for (int i=0; i<n; i++){
+        fread(&a[i], sizeof(int), 1, fi);
+    }
+    for (int i=0; i<m; i++){
+        fread(&b[i], sizeof(int), 1, fi);
+    }
+    
+    rk=merge(a, b, n, m, res);
+    
+    fo=fopen("output.bin", "wb");
+    for (int i=0; i<rk; i++){
+        fwrite(&res[i], sizeof(int), 1, fo);
+    }
+        fclose(fo);
+   
+    fclose(fi);
+    
+    
+    return 0;
+}
