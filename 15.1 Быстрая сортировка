@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void Q_Sort( int *a, int l, int r){
+    int i, j, c, x;
+    if (l>=r) return;
+    i=l;
+    j=r;
+    x=a[(i+j)/2];
+    while (i<=j){
+        while (a[i]<x) i+=1;
+        while (a[j]>x) j-=1;
+        if (i<=j){
+            c=a[i];
+            a[i]=a[j];
+            a[j]=c;
+            i+=1;
+            j-=1;
+        }
+    }
+    Q_Sort(a,l,j);
+    Q_Sort(a,i,r);
+}
+
+int main(){
+    int n=0;
+    scanf("%d",&n);
+    int *a=(int*)malloc(n*sizeof(int));
+    for (int i=0; i<n; i++){
+        scanf("%d",&a[i]);
+    }
+    Q_Sort(a,0,n-1);
+    for (int i=0; i<n; i++){
+        printf("%d ",a[i]);
+    }
+    return 0;
+}
