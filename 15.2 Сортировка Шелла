@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void Shell_Sort( int *a, int n, int shag){
+    int d;
+    for (int i=shag; i>0; i/=2){
+        for (int j=i; j<n; j++){
+            for (int k=j-i; (k>=0)&&(a[k]>a[k+i]) ; k-=i){
+                    d=a[k];
+                    a[k]=a[k+i];
+                    a[k+i]=d;
+            }
+        }
+    }
+}
+
+int main(){
+    int n=0;
+    scanf("%d",&n);
+    int *a=(int*)malloc(n*sizeof(int));
+    for (int i=0; i<n; i++){
+        scanf("%d",&a[i]);
+    }
+    int shag=0;
+    //while (pow(3,shag)-1<=n) shag++;
+    //if (pow(3,shag)-1>n) shag--;
+    shag=n/2;
+    Shell_Sort(a,n,shag);
+    for (int i=0; i<n; i++){
+        printf("%d ",a[i]);
+    }
+    return 0;
+}
