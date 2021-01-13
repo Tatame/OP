@@ -1,0 +1,11 @@
+#include <stdio.h>
+int main(){
+    int n=0, b=0, sum=0;
+    scanf("%d",&n);
+    for(int x=1;x<=n;x++){
+        scanf("%d",&b);
+        if (b%2==0) sum+=b;
+    }
+    printf("%d",sum);
+    return 0;
+}
