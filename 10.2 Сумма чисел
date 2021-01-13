@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+int reverse(int m){
+    int a=0;
+    a=m&255;
+    a=a<<8;
+    m=m>>8;
+    a=a|(m&255);
+    a=a<<8;
+    m=m>>8;
+    a=a|(m&255);
+    a=a<<8;
+    m=m>>8;
+    a=a|(m&255);
+    return a;
+}
+int main() {
+    FILE* fi;
+    FILE* fo;
+    int n=0, m=0, sum=0;
+    fi = fopen("input.bin", "rb");
+    fread(&n, sizeof(int), 1, fi);
+    if (n>10000){
+        n=reverse(n);
+        for (int i=0; i<n; i++){
+            fread(&m, sizeof(int), 1, fi);
+            m=reverse(m);
+            sum+=m;
+        }
+        sum=reverse(sum);
+        fo=fopen("output.bin", "wb");
+        fwrite(&sum, sizeof(int), 1, fo);
+        fclose(fo);
+    } 
+    else {
+        for (int i=0; i<n; i++){
+            fread(&m, sizeof(int), 1, fi);
+            sum+=m;
+        }
+        fo=fopen("output.bin", "wb");
+    fwrite(&sum, sizeof(int), 1, fo);
+    fclose(fo);
+    }
+    fclose(fi);
+    
+    
+    return 0;
+}
