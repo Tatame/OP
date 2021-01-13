@@ -1,1 +1,18 @@
-
+#include <stdio.h>
+int main(){
+    int n=0,d=0, nmin=0, nmax=0, min=100000, max=-10000;
+    scanf("%d",&n);
+    for (int i=1;i<=n;i++){
+        scanf("%d",&d);
+        if (d<min) {
+            min=d;
+            nmin=i;
+        }
+        if (d>max){
+            max=d;
+            nmax=i;
+        }
+    }
+    printf("%d %d %d %d",min,nmin,max,nmax);
+    return 0;
+}
