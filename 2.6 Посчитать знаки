@@ -1,1 +1,19 @@
-
+#include <stdio.h>
+int main(){
+    int n=0,d=0, summ=0, sumr=0, sumb=0;
+    double m=0;
+    scanf("%d",&n);
+    for (int i=1;i<=n;i++){
+        scanf("%d",&d);
+        if (d<0) summ++;
+        if (d==0) sumr++;
+        if (d>0) sumb++;
+    }
+    m=(float)summ/n;
+    printf("%0.5lf ",m);
+    m=(float)sumr/n;
+    printf("%0.5lf ",m);
+    m=(float)sumb/n;
+    printf("%0.5lf ",m);
+    return 0;
+}
