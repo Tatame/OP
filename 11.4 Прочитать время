@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Time_s{
+    int h, m, s;
+} Time;
+
+
+int readTime (char *iStr, int *oHours, int *oMinutes, int *oSeconds){
+    *oHours=0;
+    if (oMinutes != NULL) *oMinutes=0;
+    if (oSeconds != NULL) *oSeconds=0;
+    int k=0, h=0, m=0, s=0;
+    k=strlen(iStr);
+    for (int i=0; i<k; i++){
+        if (iStr[i]==124){
+            *oHours=-1;
+            if (oMinutes != NULL) *oMinutes=-1;
+            if (oSeconds != NULL) *oSeconds=-1;
+            return 0;
+        }
+    }
+    int i=0;
+    while (iStr[i]!=':'){
+        h=h * 10 + iStr[i]-48;
+        i+=1;
+    }
+    i+=1;
+    
+        while ((iStr[i]!=':')&&(iStr[i]!='\0')){
+            m=m * 10 + iStr[i]-48;
+            i+=1;
+        }
+        
+            if (iStr[i]!='\0'){
+                i+=1;
+                while (iStr[i]!='\0'){
+                    s=s * 10 + iStr[i]-48;
+                    i+=1;
+                }
+            }
+        
+    
+    if ((h>23)||(h<0)) {
+        *oHours=-1;
+        if (oMinutes != NULL) *oMinutes=-1;
+        if (oSeconds != NULL) *oSeconds=-1;
+        return 0;
+    }
+    if ((m>59)||(m<0)) {
+        *oHours=-1;
+        if (oMinutes != NULL) *oMinutes=-1;
+        if (oSeconds != NULL) *oSeconds=-1;
+        return 0;
+    }
+    if ((s>59)||(s<0)) {
+        *oHours=-1;
+        if (oMinutes != NULL) *oMinutes=-1;
+        if (oSeconds != NULL) *oSeconds=-1;
+        return 0;
+    }
+    *oHours=h;
+    if (oMinutes != NULL) *oMinutes=m;
+    if (oSeconds != NULL) *oSeconds=s;
+    return 1;
+}
+
+int main(){
+    char str[16];
+    Time t;
+    int *oHours=&t.h;
+    int *oMinutes=&t.m;
+    int *oSeconds=&t.s;
+    int p=0;
+    
+    scanf("%s",str);
+    p=readTime (str, oHours, oMinutes, oSeconds);
+    printf("%d %d %d %d\n", p, t.h, t.m, t.s);
+    p=readTime (str, oHours, oMinutes, NULL);
+    printf("%d %d %d\n", p, t.h, t.m);
+    p=readTime (str, oHours, NULL, NULL);
+    printf("%d %d\n", p, t.h);
+    
+    
+    return 0;
+}
