@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Spisok_s{
+    double num;
+    int nom;
+}Spisok;
+
+
+int main(){
+    Spisok S[100001];
+    int n=0, f=0;
+    scanf("%d %d", &n, &f);
+    for (int i=0; i<n; i++){
+        scanf("%lf %d", &S[i].num, &S[i].nom);
+    }
+    while (f!=-1){
+        printf("%0.3lf\n", S[f].num);
+        f=S[f].nom;
+    }
+    return 0;
+}
