@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include  <stdlib.h>
+#include <string.h>
+
+typedef struct Dig_s{
+    int low, up, digi;
+} Dig;
+
+int calcLetters (char *iStr, int *oLowerCnt, int *oUpperCnt, int *oDigitsCnt){
+    int k=0, low=0, up=0, dig=0;
+    k=strlen(iStr);
+    *oLowerCnt=0;
+        *oUpperCnt=0;
+        *oDigitsCnt=0;
+    for (int i=0; i<k; i++){
+        if ((iStr[i]>47)&&(iStr[i]<58)) dig+=1;
+        if ((iStr[i]>64)&&(iStr[i]<91)) up+=1;
+        if ((iStr[i]>96)&&(iStr[i]<123)) low+=1;
+        *oLowerCnt=low;
+        *oUpperCnt=up;
+        *oDigitsCnt=dig;
+    }
+    return k;
+}
+
+int main(){
+    char s[110];
+    int k=0, i=0;
+    Dig kol;
+    int* oLowerCnt = &kol.low;
+    int* oUpperCnt = &kol.up;
+    int* oDigitsCnt = &kol.digi;
+    while (gets(s)){
+        i+=1;
+        k=calcLetters(s, oLowerCnt, oUpperCnt, oDigitsCnt);
+        printf("Line %d has %d chars: %d are letters (%d lower, %d upper), %d are digits.\n", i, k, kol.low+kol.up, kol.low, kol.up, kol.digi);
+        
+    }
+    
+    return 0;
+}
