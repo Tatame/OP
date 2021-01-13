@@ -1,0 +1,63 @@
+#include <stdlib.h>
+#include <stdio.h>
+int kol=0;
+typedef struct Node_s{
+    int num;
+    struct Node_s *left;
+    struct Node_s *right;
+}Node;
+
+void In(Node* p, int n){
+    if (p->num>n){
+        if (p->left == NULL) {
+            Node *t = (Node *) malloc(sizeof(Node));
+            t->num = n;
+            t->left = NULL;
+            t->right = NULL;
+            p->left = t;
+            return;
+        }
+        else In(p->left, n);
+    }
+    if (p->num==n) return;
+    if (p->num<n){
+        if (p->right == NULL){
+            Node *t=(Node*)malloc(sizeof(Node));
+            t->num=n;
+            t->left=NULL;
+            t->right=NULL;
+            p->right=t;
+            return;
+        }else In(p->right, n);
+    }
+}
+
+void pref (Node *t){
+    if (!t) return;
+    if ((t->left==NULL)&&(t->right==NULL)) kol+=1;
+    //printf("%d ", t->num);
+    pref(t->left);
+    pref(t->right);
+}
+
+void postf (Node *t){
+    if (!t) return;
+    postf(t->left);
+    postf(t->right);
+    printf("%d ", t->num);
+}
+
+int main(){
+    int n;
+    freopen("input.txt", "r", stdin);
+    Node *p=(Node*)malloc(sizeof(Node));
+    p->left=NULL;
+    p->right=NULL;
+    scanf("%d", &p->num);
+    while (scanf("%d",&n)!=EOF) {
+        In(p, n);
+    }
+    pref(p);
+    printf("%d", kol);
+    return 0;
+}
