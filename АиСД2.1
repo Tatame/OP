@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+typedef struct Inf_s{
+    char num;
+    struct Inf_s *next;
+}Inf;
+
+Inf* create(){
+    Inf *p;
+    p=(Inf*)malloc(sizeof(Inf));
+    p->num = '1';
+    p->next = NULL;
+    return p;
+}
+
+Inf* pop(Inf* t, char* str1, int j){
+    Inf *p;
+    str1[j]=t->num;
+    p=t;
+    t=t->next;
+    free(p);
+    return t;
+}
+
+Inf* push(Inf* t, char N){
+    Inf* p;
+    p = (Inf*) malloc( sizeof(Inf));
+    p->num = N;
+    p->next = t;
+    return p;
+}
+
+int main(){
+    char str[1001];
+    gets(str);
+    Inf *head;
+    int k;
+    k=strlen(str);
+    int j=0;
+    char h[1];
+    char* str1=(char*)malloc((k+1)*sizeof(char));
+    head=create();
+    for  (int i=0; i<k; i++){
+        if (str[i]=='('){
+            head=push(head,str[i]);
+        }
+        else{
+            if ((str[i]=='+')||(str[i]=='-')){
+                while ((head->num=='+')||(head->num=='-')||(head->num=='*')||(head->num=='/')||(head->num=='^')){
+                    head=pop(head,str1,j);
+                    j++;
+                }
+                head=push(head,str[i]);
+            }
+            else {
+                if ((str[i]=='*')||(str[i]=='/')){
+                    while ((head->num=='*')||(head->num=='/')||(head->num=='^')){
+                        head=pop(head,str1,j);
+                        j++;
+                    }
+                    head=push(head,str[i]);
+                }
+                else{
+                    if ((str[i]>96)&&(str[i]<123)){
+                        str1[j]=str[i];
+                        j++;
+                    }
+                    if (str[i]==')'){
+                        while (head->num!='('){
+                            head=pop(head,str1,j);
+                            j++;
+                        }
+                        head=pop(head,h,0);
+                    }
+                }
+
+
+            }
+
+        }
+        //printf("%c ",head->num);
+    }
+    while (1){
+        if (head->num=='1') break;
+        head=pop(head,str1,j);
+        j++;
+    //printf("%c ",head->num);
+    }
+    str1[j]='\0';
+    free(head);
+    printf("%s",str1);
+    return 0;
+}
