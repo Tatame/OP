@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+typedef struct Inf_s{
+    int num;
+    struct Inf_s *next;
+}Inf;
+
+Inf* create(){
+    Inf *p;
+    p=(Inf*)malloc(sizeof(Inf));
+    p->num = 0;
+    p->next = NULL;
+    return p;
+}
+
+Inf* pop(Inf* t, int* str1, int j){
+    Inf *p;
+    str1[j]=t->num;
+    p=t;
+    t=t->next;
+    free(p);
+    return t;
+}
+
+Inf* push(Inf* t, int N){
+    Inf* p;
+    p = (Inf*) malloc( sizeof(Inf));
+    p->num = N;
+    p->next = t;
+    return p;
+}
+
+int main(){
+    char str[2001];
+    gets(str);
+    Inf *head;
+    int sum=0;
+    int* str1=(int*)malloc(2*sizeof(int));
+    head=create();
+    int i=0;
+    while (str[i]!='\0'){
+        if ((str[i]>47)&&(str[i]<58)){
+            while (str[i]!=' '){
+                sum=sum*10+(str[i]-48);
+                i++;
+            }
+            head=push(head,sum);
+            sum=0;
+            i++;
+        }
+        else{
+            head=pop(head,str1,0);
+            head=pop(head,str1,1);
+            if (str[i]=='+'){
+                sum=str1[1]+str1[0];
+            }
+            if (str[i]=='-'){
+                sum=str1[1]-str1[0];
+            }
+            if (str[i]=='*'){
+                sum=str1[1]*str1[0];
+            }
+            if (str[i]=='/'){
+                sum=str1[1]/str1[0];
+            }
+            head=push(head,sum);
+            sum=0;
+            i++;
+            i++;
+        }
+    }
+    printf("%d",head->num);
+    free(head->next);
+    free(head);
+    return 0;
+}
